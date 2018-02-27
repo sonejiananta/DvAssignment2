@@ -5,8 +5,10 @@
 	<title> Australian Open - Visualization </title>
 	<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-
+	
+	
 	<script type="text/javascript" src="headScript.js"></script>
+	
 </head>
 <style>
 
@@ -160,7 +162,7 @@
 	
 
 </style>
-<body>
+<body onload="myFunction()">
 	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
 	<h1 align="left"> Australian Open Matches </h1>
@@ -188,5 +190,8 @@
 		</div>
 		
 	</div>
+	<script type="text/javascript">
+		window.alert("Welcome to the visualization of tennis matches !!" + "\n\n\n" + "1) choose a match from the dropdown " + "\n\n" + "2) Press Submit button to visualize " + "\n\n" + "3) Press Reset to reload and visualize other matches");
+	</script>
 	<script src = "script.js"></script> 
 </body>
