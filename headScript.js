@@ -9,7 +9,6 @@ function getSelected1(){
 	m_player1 = player[0];
 	m_player2 = player[1];
 
-
 	var height = 100;
 	var width = 800;
 	var canvas0 = d3.select('#canvas').append('svg')    
@@ -67,31 +66,32 @@ function getSelected1(){
   	d3.csv("10yearAUSOpenMatches.csv", function(error, data) {
 	    data.forEach(function(d){
 	    	
+	    	
 	    	if(d.year == m_year && (d.round).toUpperCase() == m_round && (d.player1).toUpperCase() == m_player1 && (d.player2).toUpperCase() == m_player2 )
 	    	{
 	    		
-	    		var p1 = canvas0.append('text').text(d.player2).attr("x", 120).attr("y", 30).style("fill", "darkorange")
-	    				.style("font-family", "sans-serif")
+	    		var p1 = canvas0.append('text').text(d.player2).attr("x", 120).attr("y", 30).style("fill", "#ff6600")
+	    				.style("font-family", "impact")
 	    				.style("font-size", "25px");
 
-				var c1 = canvas0.append('text').text("( " + d.country1 + " )").attr("x", 160).attr("y", 60).style("fill", "darkorange")
-	    				.style("font-family", "sans-serif")
+				var c1 = canvas0.append('text').text("( " + d.country1 + " )").attr("x", 180).attr("y", 60).style("fill", "#ff6600")
+	    				.style("font-family", "impact")
 	    				.style("font-size", "25px");
 
-	    		var w1 = canvas0.append('text').text("Runner-Up").attr("x", 165).attr("y", 90).style("fill", "darkorange")
-	    				.style("font-family", "sans-serif")
+	    		var w1 = canvas0.append('text').text("Runner-Up").attr("x", 173).attr("y", 90).style("fill", "#ff6600")
+	    				.style("font-family", "georgia")
 	    				.style("font-size", "15px");
 	    		
-				var p1 = canvas0.append('text').text(d.player1).attr("x", 510).attr("y", 30).style("fill", "steelblue")
-						.style("font-family", "sans-serif")
+				var p1 = canvas0.append('text').text(d.player1).attr("x", 510).attr("y", 30).style("fill", "#000099")
+						.style("font-family", "impact")
 	    				.style("font-size", "25px");
 
-	    		var c2 = canvas0.append('text').text("( " + d.country2 + " )").attr("x", 550).attr("y", 60).style("fill", "steelblue")
-	    				.style("font-family", "sans-serif")
+	    		var c2 = canvas0.append('text').text("( " + d.country2 + " )").attr("x", 570).attr("y", 60).style("fill", "#000099")
+	    				.style("font-family", "impact")
 	    				.style("font-size", "25px");
 	    		
-	    		var w2 = canvas0.append('text').text("Winner").attr("x", 567).attr("y", 90).style("fill", "steelblue")
-	    				.style("font-family", "sans-serif")
+	    		var w2 = canvas0.append('text').text("Winner").attr("x", 579).attr("y", 90).style("fill", "#000099")
+	    				.style("font-family", "geogia")
 	    				.style("font-size", "15px");
 	    		
 	    		var max_ace = (Math.floor(Math.max(d.ace1,d.ace2)/10)+1)*10;
@@ -102,6 +102,10 @@ function getSelected1(){
 	    		var min_ace = 0-max_ace;
 	    		var min_double = 0-max_double;
 
+	    		var tip = d3.tip()
+					  .attr('class', 'd3-tip')
+					  .offset([-10, 0])
+					  .html("<strong>Year:</strong> <span style='color:red'>" + " " + d.year + "</span><br><strong>Round:</strong><span style='color:red'>" + " " + (d.round).toUpperCase() + "</span>");
 
 	    		var DATA = [
 	    		{
@@ -143,25 +147,28 @@ function getSelected1(){
 				    .scale(x_double)
 				    .orient("bottom");
 				
-				// var yAxis = d3.svg.axis()
-				//     .scale(y)
-				//     .orient("left");
-				
-				
-			    console.log("added axis");
 
-			    document.getElementById("text1").innerHTML += "<br><br><br><br><br><br><h2>Ace ("+d.ace2+")</h2><br><br><h2>Double ("+d.double2+")</h2><br><h2>secPointWon ("+ (d.secPointWon2*100).toFixed(0) +"%)</h2><br><h2>Break ("+ (d.break2*100).toFixed(0) +"%)</h2>";
 
-			    document.getElementById("text2").innerHTML += "<br><br><br><br><br><br><h2>Ace ("+d.ace1+")</h2><br><br><h2>Double ("+d.double1+")</h2><br><h2>secPointWon ("+ (d.secPointWon1*100).toFixed(0) +"%)</h2><br><h2>Break ("+ (d.break1*100).toFixed(0) +"%)</h2>";
+			     document.getElementById("text1").innerHTML += "<br><br><br><br><br><br><h3>Ace ("+d.ace2+")</h3><br><br><h3>Double ("+d.double2+")</h3><br><br><h3>secPointWon ("+ (d.secPointWon2*100).toFixed(0) +"%)</h3><br><br><h3>Break ("+ (d.break2*100).toFixed(0) +"%)</h3>";
+				 document.getElementById("text2").innerHTML += "<br><br><br><br><br><br><h3>Ace ("+d.ace1+")</h3><br><br><h3>Double ("+d.double1+")</h3><br><br><h3>secPointWon ("+ (d.secPointWon1*100).toFixed(0) +"%)</h3><br><br><h3>Break ("+ (d.break1*100).toFixed(0) +"%)</h3>";
 
-			    var bars1 = canvas1.selectAll(".bar")
+
+			    canvas1.call(tip);
+			    canvas2.call(tip);
+			    canvas3.call(tip);
+			    canvas4.call(tip);
+			    
+			    canvas1.selectAll(".bar")
 				    	.data(DATA)
 				    .enter().append("rect")
+				    	.attr("class","bar")
 				    	.attr("x", function(d){ return x_ace(Math.min(0, d.ace_value));})
 				    	.attr("y", function(d){ return y(d.name);})
 				    	.attr("width", function(d){ return Math.abs(x_ace(d.ace_value) - x_ace(0)); })
 				    	.attr("height", y.rangeBand())
-				    	.style("fill", function(d){ if(d.name=="Ace1") return "steelblue"; else return "darkorange";})
+				    	.style("fill", function(d){ if(d.name=="Ace1") return "#000099"; else return "#ff6600";})
+				    	.on('mouseover', tip.show)
+      					.on('mouseout', tip.hide);
 				   
 				
 				var text1 = canvas1.selectAll("text")
@@ -179,19 +186,23 @@ function getSelected1(){
 													return "-1.3em";
 												else return ".35em";
 							})
-						.attr("font-family", "sans-serif")
+						.attr("font-family", "impact")
 						.attr("font-size", "20px")
 						.style("fill", "white");
 				
 
-			   var bars2 = canvas2.selectAll(".bar")
+			 	canvas2.selectAll(".bar")
 				    	.data(DATA)
 				    .enter().append("rect")
+				    	.attr("class","bar")
 				    	.attr("x", function(d){ return x_double(Math.min(0, d.double_value));})
 				    	.attr("y", function(d){ return y(d.name);})
 				    	.attr("width", function(d){ return Math.abs(x_double(d.double_value) - x_double(0)); })
 				    	.attr("height", y.rangeBand())
-				    	.style("fill", function(d){ if(d.name=="Ace1") return "steelblue"; else return "darkorange";});
+				    	.style("fill", function(d){ if(d.name=="Ace1") return "#000099"; else return "#ff6600";})
+				    	.on('mouseover', tip.show)
+      					.on('mouseout', tip.hide);
+
 				    	
 			 var text2 = canvas2.selectAll("text")
 						.data(DATA)
@@ -208,19 +219,22 @@ function getSelected1(){
 													return "-1.3em";
 												else return ".35em";
 							})
-						.attr("font-family", "sans-serif")
+						.attr("font-family", "impact")
 						.attr("font-size", "20px")
 						.style("fill", "white");
 
 
-				var bars3 = canvas3.selectAll(".bar")
+				canvas3.selectAll(".bar")
 				    	.data(DATA)
 				    .enter().append("rect")
+				    	.attr("class","bar")
 				    	.attr("x", function(d){ return x_sec(Math.min(0, d.sec_value));})
 				    	.attr("y", function(d){ return y(d.name);})
 				    	.attr("width", function(d){ return Math.abs(x_sec(d.sec_value) - x_sec(0)); })
 				    	.attr("height", y.rangeBand())
-				    	.style("fill", function(d){ if(d.name=="Ace1") return "steelblue"; else return "darkorange";});
+				    	.style("fill", function(d){ if(d.name=="Ace1") return "#000099"; else return "#ff6600";})
+				    	.on('mouseover', tip.show)
+      					.on('mouseout', tip.hide);
 				    	
 			 var text3 = canvas3.selectAll("text")
 						.data(DATA)
@@ -237,19 +251,22 @@ function getSelected1(){
 													return "-2.5em";
 												else return ".35em";
 							})
-						.attr("font-family", "sans-serif")
+						.attr("font-family", "impact")
 						.attr("font-size", "20px")
 						.style("fill", "white");
 
 
-			var bars4 = canvas4.selectAll(".bar")
+			canvas4.selectAll(".bar")
 			    	.data(DATA)
 			    .enter().append("rect")
+			    	.attr("class","bar")
 			    	.attr("x", function(d){ return x_sec(Math.min(0, d.break_value));})
 			    	.attr("y", function(d){ return y(d.name);})
 			    	.attr("width", function(d){ return Math.abs(x_sec(d.break_value) - x_sec(0)); })
 			    	.attr("height", y.rangeBand())
-			    	.style("fill", function(d){ if(d.name=="Ace1") return "steelblue"; else return "darkorange";});
+			    	.style("fill", function(d){ if(d.name=="Ace1") return "#000099"; else return "#ff6600";})
+			    	.on('mouseover', tip.show)
+      				.on('mouseout', tip.hide);
 				    	
 			 var text4 = canvas4.selectAll("text")
 						.data(DATA)
@@ -266,14 +283,9 @@ function getSelected1(){
 													return "-2.5em";
 												else return ".35em";
 							})
-						.attr("font-family", "sans-serif")
+						.attr("font-family", "impact")
 						.attr("font-size", "20px")
 						.style("fill", "white");
-
-
-			   
-
-
 
 
 	    	}
@@ -285,3 +297,4 @@ function getSelected1(){
 	  });
   	
 }
+

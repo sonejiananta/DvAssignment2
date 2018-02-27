@@ -4,10 +4,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<title> Australian Open - Visualization </title>
 	<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
 	<script type="text/javascript" src="headScript.js"></script>
 </head>
 <style>
 
+
+	body {
+	    background-image: url("as_image1.jpg");
+	    height: 100%; 
+	    background-repeat: no-repeat;
+	    background-size: cover;
+	}
 	div[id="parent"]{
 		padding : 40px;
 		height : auto;
@@ -24,6 +33,7 @@
 		position : relative;
 		border-style : groove;
 		border-color : #ea503f;
+		opacity : 0.95;
 	}
 	div[id="player1Text"]{
 		width: 200px;
@@ -68,6 +78,8 @@
     	position: absolute;
 	    top : 65px;
 	    left: 500px;
+	    font-family : impact;
+	    font-size: 18px;
 	}
 
 	.button2{
@@ -78,6 +90,8 @@
     	position: absolute;
 	    top : 65px;
 	    left: 600px;
+	    font-family : impact;
+	    font-size: 18px;
 	}
 
 	.dropdown{
@@ -88,21 +102,22 @@
 
 
 	h1 {
-		font-family : sans-serif;
-		color: #ea503f;
+		font-family : impact;
+		color: #f2f2f2;
+		padding-left : 10px;
 	}
 
 	#text1 {
-		font-family : sans-serif;
-		color: #ea503f;	
+		font-family : impact;
+		color:  #ffff80;	
 		text-align :center;
 
 
 	}
 
 	#text2 {
-		font-family : sans-serif;
-		color: #ea503f;
+		font-family : impact;
+		color: #ffff80;
 		text-align :center;
 	}
 
@@ -111,23 +126,55 @@
     	 border-radius: 8px;
     	 padding-left : 5px;
 	}
+	.d3-tip {
+	  line-height: 1;
+	  font-weight: bold;
+	  padding: 12px;
+	  background: rgba(0, 0, 0, 0.8);
+	  color: #fff;
+	  border-radius: 2px;
+	}
+
+	::-moz-placeholder {
+	  opacity: 0.5;
+	  font-family : georgia;
+	}
+	.bar : hover {
+		fill : "orange";
+	}
+
+	/*
+	.d3-tip:after {
+		  box-sizing: border-box;
+		  display : inline;
+		  font-size: 10px;
+		  width: 100%;
+		  line-height: 1;
+		  color: rgba(0, 0, 0, 0.8);
+		  content: "\25BC";
+		  position: bottom;
+		  text-align: center;
+		}*/
+
 
 	
 
 </style>
 <body>
-	<h1> Australian Open Matches </h1>
+	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+	<h1 align="left"> Australian Open Matches </h1>
 	
 	<form id = "form">
 	<div class="dropdown">
-		<input id="m1" list="match" name="match" size="70" style ="height:37px" placeholder = "    Choose a match from the dropdown">
-		<datalist id="match" style= "font-family: courier"></datalist> 
+		<input id="m1" list="match" name="match" size="70" style ="height:37px" title = "Enter in the form YEAR , ROUND : PLAYER1 vs PLAYER2" placeholder = " Choose a match from the dropdown">
+		<datalist id="match" style= "font-family: impact"></datalist> 
 	</div>
 	</form>
 
-	<button class="button button1" id ="button1" onclick = "javascript: getSelected1();">Submit</button>
+	<button class="button button1" id ="button1" onclick = "javascript: getSelected1()" title = "Click to visualize">Submit</button>
 
-	<button class="button button2" id ="button2" onClick="window.location.reload()">Reset</button>
+	<button class="button button2" id ="button2" onClick="window.location.reload()" title = "Click to reload">Reset</button>
 	<div id = 'parent'>
 		<div id = 'player1Text'>
 			<div id = 'text1'>
