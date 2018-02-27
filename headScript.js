@@ -111,14 +111,14 @@ function getSelected1(){
 	    		{
 	    			"name": "Ace1",
 	    			"ace_value": d.ace1,
-	    			"double_value": d.double1,
+	    			"return_value": d.return1,
 	    			"sec_value" : d.secPointWon1,
 	    			"break_value" : d.break1,
 	    		},
 	    		{
 	    			"name": "Ace2",
 	    			"ace_value": 0-d.ace2,
-	    			"double_value" : 0-d.double2,
+	    			"return_value" : 0-d.return2,
 	    			"sec_value" : 0-d.secPointWon2,
 	    			"break_value" : 0-d.break2,
 	    		}];
@@ -149,8 +149,8 @@ function getSelected1(){
 				
 
 
-			     document.getElementById("text1").innerHTML += "<br><br><br><br><br><br><h3>Ace ("+d.ace2+")</h3><br><br><h3>Double ("+d.double2+")</h3><br><br><h3>secPointWon ("+ (d.secPointWon2*100).toFixed(0) +"%)</h3><br><br><h3>Break ("+ (d.break2*100).toFixed(0) +"%)</h3>";
-				 document.getElementById("text2").innerHTML += "<br><br><br><br><br><br><h3>Ace ("+d.ace1+")</h3><br><br><h3>Double ("+d.double1+")</h3><br><br><h3>secPointWon ("+ (d.secPointWon1*100).toFixed(0) +"%)</h3><br><br><h3>Break ("+ (d.break1*100).toFixed(0) +"%)</h3>";
+			     document.getElementById("text1").innerHTML += "<br><br><br><br><br><br><h3>Ace ("+d.ace2+")</h3><br><br><h3>Return ("+ (d.return2*100).toFixed(0)+"%)</h3><br><br><h3>Second serve ("+ (d.secPointWon2*100).toFixed(0) +"%)</h3><br><br><h3>Break ("+ (d.break2*100).toFixed(0) +"%)</h3>";
+				 document.getElementById("text2").innerHTML += "<br><br><br><br><br><br><h3>Ace ("+d.ace1+")</h3><br><br><h3>Return ("+ (d.return1*100).toFixed(0)+"%)</h3><br><br><h3>Second serve ("+ (d.secPointWon1*100).toFixed(0) +"%)</h3><br><br><h3>Break ("+ (d.break1*100).toFixed(0) +"%)</h3>";
 
 
 			    canvas1.call(tip);
@@ -195,9 +195,9 @@ function getSelected1(){
 				    	.data(DATA)
 				    .enter().append("rect")
 				    	.attr("class","bar")
-				    	.attr("x", function(d){ return x_double(Math.min(0, d.double_value));})
+				    	.attr("x", function(d){ return x_sec(Math.min(0, d.return_value));})
 				    	.attr("y", function(d){ return y(d.name);})
-				    	.attr("width", function(d){ return Math.abs(x_double(d.double_value) - x_double(0)); })
+				    	.attr("width", function(d){ return Math.abs(x_sec(d.return_value) - x_sec(0)); })
 				    	.attr("height", y.rangeBand())
 				    	.style("fill", function(d){ if(d.name=="Ace1") return "#000099"; else return "#ff6600";})
 				    	.on('mouseover', tip.show)
@@ -207,16 +207,16 @@ function getSelected1(){
 			 var text2 = canvas2.selectAll("text")
 						.data(DATA)
 					.enter().append("text")
-						.text(function(d){  if(d.double_value < 0) 
-												return Math.abs(d.double_value); 
-											else if(d.double_value ==0) return "";
-											else return d.double_value;
+						.text(function(d){  if(d.return_value < 0) 
+												return (Math.abs(d.return_value)*100).toFixed(0) + "%"; 
+											else if(d.return_value ==0) return "";
+											else return (d.return_value*100).toFixed(0) + "%";
 										})
-						.attr("x", function(d){ return x_double(d.double_value);})
+						.attr("x", function(d){ return x_sec(d.return_value);})
 						.attr("y", function(d){ return y(d.name) ;})
 						.attr("dy", "1.5em")
-						.attr("dx", function(d){ if(d.double_value > 0)
-													return "-1.3em";
+						.attr("dx", function(d){ if(d.return_value > 0)
+													return "-2.5em";
 												else return ".35em";
 							})
 						.attr("font-family", "impact")
